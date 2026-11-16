@@ -23,7 +23,7 @@
 
 ```
 .
-├── chatgpt-213470.conf   # 站点配置（前缀路由 + 改写 + 归档 + 账号管理）
+├── chatgpt-mirror.conf   # 站点配置（前缀路由 + 改写 + 归档 + 账号管理）
 ├── panel.js              # 页面右下角归档浮层
 ├── auth.html             # 账号管理页
 ├── auth.js               # 账号管理页脚本
@@ -31,8 +31,6 @@
 ├── verify.sh             # 带 Host 头访问本机 80 的自检脚本
 └── README.md
 ```
-
-文件名里的 `213470` 只是原部署域名的一部分，改成自己的名字不影响功能。
 
 ---
 
@@ -56,8 +54,8 @@ lua_shared_dict gpt_archive 16m;
 
 ```bash
 cd chatgpt-nginx-mirror
-BASE=chatgpt.example.com                      # 换成你的域名
-sed -i "s/chatgpt\.213470\.xyz/$BASE/g" chatgpt-213470.conf panel.js auth.js auth.html README.md
+BASE=your-domain.tld                          # 换成你的域名
+sed -i "s/example\.com/$BASE/g" chatgpt-mirror.conf panel.js auth.js auth.html README.md
 ```
 
 同时确认容器内的路径（`deploy.sh` 里可改）：

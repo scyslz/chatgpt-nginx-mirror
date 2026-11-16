@@ -20,20 +20,20 @@ check() {
 }
 
 echo "== 首页/接口"
-check chat.chatgpt.213470.xyz  /            200
-check chatgpt.213470.xyz       /            404
-check chat.chatgpt.213470.xyz  /backend-api/me 401
-check api.chatgpt.213470.xyz   /v1/models   401
+check chat.example.com  /            200
+check example.com       /            404
+check chat.example.com  /backend-api/me 401
+check api.example.com   /v1/models   401
 
 echo "== 页面域名改写"
-body=$(curl -sS --max-time 30 -H 'Host: chat.chatgpt.213470.xyz' -H "User-Agent: $UA" "$BASE/" 2>/dev/null)
+body=$(curl -sS --max-time 30 -H 'Host: chat.example.com' -H "User-Agent: $UA" "$BASE/" 2>/dev/null)
 left=$(printf '%s' "$body" | grep -oE '//(chatgpt\.com|cdn\.oaistatic\.com|persistent\.oaistatic\.com|files\.oaiusercontent\.com|api\.openai\.com|auth\.openai\.com)' | sort -u | tr '\n' ' ')
 if [[ -z "$left" ]]; then
   echo "  ok   页面中未残留上游域名"
 else
   echo "  warn 仍残留：$left"
 fi
-printf '%s' "$body" | grep -q 'chatgpt\.213470\.xyz' && echo "  ok   已出现镜像域名" || echo "  FAIL 未发现镜像域名"
+printf '%s' "$body" | grep -q 'example\.com' && echo "  ok   已出现镜像域名" || echo "  FAIL 未发现镜像域名"
 
 echo "== 静态资源"
-check persistent.chatgpt.213470.xyz '/learning/flags/2026-11-06/gg.png' 200
+check persistent.example.com '/learning/flags/2026-11-06/gg.png' 200
